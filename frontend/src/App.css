@@ -1,0 +1,329 @@
+/* src/App.css */
+
+.page {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* ---------- HEADER ---------- */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 48px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-family: "Fraunces", serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+   display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-nav {
+  display: flex;
+  gap: 32px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* ---------- HERO / PROMO ---------- */
+.hero {
+  padding: 96px 48px 64px;
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-family: "Fraunces", serif;
+  font-size: clamp(36px, 5vw, 58px);
+  line-height: 1.1;
+  font-weight: 500;
+  margin: 0 0 20px;
+  letter-spacing: -0.01em;
+}
+
+.hero p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0 auto 32px;
+  max-width: 560px;
+}
+
+.hero-badges {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.badge {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 13px;
+}
+
+/* ---------- HOW IT WORKS ---------- */
+.how-it-works {
+  padding: 64px 48px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.how-it-works h2 {
+  font-family: "Fraunces", serif;
+  font-size: 28px;
+  font-weight: 500;
+  text-align: center;
+  margin: 0 0 48px;
+}
+
+.steps {
+  display: flex;
+  gap: 24px;
+  position: relative;
+}
+
+.step {
+  flex: 1;
+  position: relative;
+  padding-top: 8px;
+}
+
+.step-number {
+  font-family: "Fraunces", serif;
+  font-size: 15px;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.step h3 {
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+
+.step p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .steps {
+    flex-direction: column;
+    gap: 32px;
+  }
+}
+
+/* ---------- ASSISTANT PANEL (core interactive section) ---------- */
+.assistant-section {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 72px 48px 96px;
+  margin-top: 32px;
+}
+
+.assistant-panel {
+  max-width: 620px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.assistant-panel h2 {
+  font-family: "Fraunces", serif;
+  font-size: 26px;
+  font-weight: 500;
+  margin: 0 0 8px;
+}
+
+.assistant-panel > p {
+  color: var(--text-muted);
+  font-size: 15px;
+  margin: 0 0 40px;
+}
+
+/* Mic button */
+.mic-button {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 32px;
+  position: relative;
+  transition: transform 0.15s ease;
+}
+
+.mic-button:hover {
+  transform: scale(1.04);
+}
+
+.mic-button.listening {
+  background: var(--teal);
+}
+
+.mic-button.listening::before {
+  content: "";
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 2px solid var(--teal);
+  animation: pulse-ring 1.4s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+.mic-status {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  min-height: 18px;
+}
+
+/* Text input row */
+.input-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.input-row input {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.input-row input::placeholder {
+  color: var(--text-muted);
+}
+
+.ask-button {
+  background: var(--accent);
+  color: #14100a;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.ask-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Response transcript */
+.response-box {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: left;
+  margin-bottom: 40px;
+}
+
+.response-box .label {
+  font-size: 12px;
+  color: var(--accent);
+  margin: 0 0 6px;
+}
+
+.response-box p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Demo/test area */
+.demo-form {
+  border-top: 1px solid var(--border);
+  padding-top: 32px;
+  text-align: left;
+}
+
+.demo-form h3 {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin: 0 0 16px;
+}
+
+.demo-form label {
+  display: block;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.demo-form input {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.demo-form button {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/* ---------- FOOTER ---------- */
+.footer {
+  text-align: center;
+  padding: 32px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.cursor {
+  animation: blink 0.8s step-end infinite;
+  color: var(--accent);
+  font-weight: 400;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
