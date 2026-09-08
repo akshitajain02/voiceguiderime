@@ -1,147 +1,380 @@
-# VoiceGuide : Rime Integrated Platform for Visually Impaired Users.
+# 🎙️ VoiceGuide
 
-A real-time voice assistant that helps visually impaired users navigate web pages by speaking to them, built for **DataForge Rime Hackathon Challenge**.
+### Rime-Integrated Voice Assistant for Visually Impaired Users
 
-VoiceGuide listens to a spoken question, reads the current webpage's content, and replies out loud through natural, interruptible speech — instead of forcing the user to wait for a full response before speaking again.
+> **VoiceGuide** is a real-time voice assistant designed to make web pages easier to navigate for visually impaired users. It understands what is currently visible on a webpage, listens to the user's question, and responds through natural, interruptible voice interaction.
 
----
+Built for the **DataForge Rime Hackathon Challenge**.
 
-## Table of Contents
-- [Architecture](#architecture)
-- [Setup Instructions](#setup-instructions)
-- [Third-Party Services](#third-party-services)
-- [Rime Voice Integration Details](#rime-voice-integration-details)
-- [Known Limitations](#known-limitations)
-- [Failure Behavior](#failure-behavior)
-- [Team & Module Ownership](#team--module-ownership)
+<p align="center">
+  <img src="https://img.shields.io/badge/React-18%2B-61DAFB?style=for-the-badge&logo=react&logoColor=white" />
+  <img src="https://img.shields.io/badge/Rime-TTS-6C63FF?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/LiveKit-Realtime-FF6B35?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Accessibility-A11y-2E7D32?style=for-the-badge" />
+</p>
 
 ---
 
-## Architecture
-User speaks
-│
-▼
-[AssemblyAI STT] ──► transcribed text
-│
-▼
-[Frontend: screenReader.js] ──► extracts visible page content (DOM)
-│
-▼
-[Frontend: promptBuilder.js] ──► combines screen content + user query into an LLM prompt
-│
-▼
-[LLM Backend] ──► decides the spoken response
-│
-▼
-[Rime TTS] ──► converts response text to speech
-│
-▼
-[LiveKit Agent] ──► streams audio back to user, handles interruption via VAD
-│
-▼
-User hears response (can interrupt anytime)
+## ✨ What is VoiceGuide?
 
+Navigating a modern webpage can be difficult without visual feedback. VoiceGuide addresses this by connecting **screen understanding, speech recognition, an LLM, and real-time voice synthesis** into a single interaction loop.
 
-**Core modules:**
+A user can simply ask something like:
 
-| Module | Responsibility |
-|---|---|
-| Frontend (React) | UI, screen-content extraction, LLM prompt construction |
-| Voice Pipeline / Backend | LiveKit agent, Deepgram/AssemblyAI STT, interrupt handling, state tracking |
-| Rime Integration | Streaming TTS via WebSocket, voice selection, pronunciation handling |
-| Integration & Testing | End-to-end wiring, automated interrupt-latency testing, status dashboard |
+> **"What options are available on this page?"**
+
+VoiceGuide reads the relevant visible content, understands the question in context, and speaks the answer back.
+
+The interaction is designed to feel conversational rather than like a traditional text-to-speech reader. Users can **interrupt the assistant while it is speaking** and continue the conversation naturally.
+
+### The basic flow
+
+**Speak → Understand the page → Generate an answer → Speak it back**
 
 ---
 
-## Setup Instructions
+## 🏗️ Architecture
+
+```text
+┌──────────────────────┐
+│        User          │
+│   Speaks a question  │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│     AssemblyAI       │
+│       STT            │
+│ Speech → Text        │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│     screenReader.js  │
+│                      │
+│ Extract visible DOM  │
+│ content from webpage │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│    promptBuilder.js  │
+│                      │
+│ Page content +       │
+│ User query           │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│     LLM Backend      │
+│                      │
+│ Understand context   │
+│ + generate response  │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│        Rime          │
+│        TTS           │
+│ Text → Speech        │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│       LiveKit        │
+│                      │
+│ Audio streaming +    │
+│ VAD + interruption   │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│        User          │
+│   Hears the answer   │
+│   Can interrupt      │
+└──────────────────────┘
+```
+
+### Core modules
+
+| Module                       | Responsibility                                                               |
+| ---------------------------- | ---------------------------------------------------------------------------- |
+| **Frontend (React)**         | User interface, page-content extraction and prompt construction              |
+| **Voice Pipeline / Backend** | LiveKit agent, STT integration, interruption handling and conversation state |
+| **Rime Integration**         | Streaming text-to-speech, voice selection and pronunciation handling         |
+| **Integration & Testing**    | End-to-end integration, interrupt-latency testing and evidence collection    |
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js (v18+)
-- npm
-- API keys for: AssemblyAI, [LLM provider — FILL IN], Rime, LiveKit (see `.env.example`)
 
-### Clone the repo
+Make sure the following are installed before running the project:
+
+* **Node.js 18+**
+* **npm**
+* API credentials for:
+
+  * AssemblyAI
+  * Rime
+  * LiveKit
+  * LLM provider
+
+Environment variable names and configuration details are documented in `.env.example`.
+
+---
+
+### 1. Clone the repository
+
 ```bash
 git clone https://github.com/prajjwalbaweja/VoiceGuide.git
 cd VoiceGuide
 ```
 
-### Frontend setup
+---
+
+### 2. Start the frontend
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-App runs at `http://localhost:5173` (or next available port).
 
-### Backend / Voice pipeline setup
-```bash
-cd voice-agent
-[FILL IN — e.g. pip install -r requirements.txt / npm install]
-[FILL IN — how to start the agent, e.g. python agent.py]
+The development server will normally be available at:
+
+```text
+http://localhost:5173
 ```
 
-### Environment variables
-Create a `.env` file in the relevant module folder with:
-
+If that port is already in use, Vite will automatically select another available port.
 
 ---
 
-## Third-Party Services
+### 3. Start the voice agent
 
-| Service | Purpose |
-|---|---|
-| **AssemblyAI** | Speech-to-text (STT) — converts user's spoken question to text |
-| **Rime** | Text-to-speech (TTS) — converts LLM's response to natural spoken audio |
-| **LiveKit** | Real-time audio streaming + Voice Activity Detection (VAD) for interruption handling |
-| **[LLM Provider — FILL IN]** | Decides the spoken response based on screen content + user query |
+```bash
+cd voice-agent
 
----
+# Install dependencies
+[FILL IN — e.g. pip install -r requirements.txt]
 
-## Rime Voice Integration Details
+# Start the agent
+[FILL IN — e.g. python agent.py]
+```
 
-| Field | Value |
-|---|---|
-| Model ID | `[FILL IN — e.g. mist-v2 / arcana]` |
-| Speaker/Voice | `[FILL IN — e.g. "abbie", "marsh"]` |
-| Language | `[FILL IN — e.g. en-US]` |
-| Endpoint | `[FILL IN — e.g. wss://users.rime.ai/ws2]` |
-| Audio Format | `[FILL IN — e.g. mp3 / pcm / mulaw, sample rate]` |
-| Transport | `[FILL IN — e.g. WebSocket streaming]` |
-
-*(To be filled in by the Rime Integration Lead — Akshita)*
+> **Note:** The exact backend commands depend on the final voice-agent implementation.
 
 ---
 
-## Known Limitations
+## 🔐 Environment Variables
 
-- Screen-reading (`readCurrentPage()`) only detects elements currently visible in the viewport — content requiring scroll may be missed unless explicitly re-triggered.
-- No persistent conversation memory — each question is treated independently.
-- Pronunciation/number handling (e.g. reading "₹500" or "10:30 AM" naturally) is a stretch feature and may not be fully implemented depending on time constraints.
-- Not tested across all browsers — primarily verified on Chrome.
-- Backend LLM response time may add latency beyond what real-time voice interaction ideally requires.
+Create a `.env` file in the appropriate module directory.
 
----
+Example:
 
-## Failure Behavior
+```env
+ASSEMBLYAI_API_KEY=your_key_here
+RIME_API_KEY=your_key_here
+LIVEKIT_API_KEY=your_key_here
+LIVEKIT_API_SECRET=your_secret_here
+LIVEKIT_URL=your_livekit_url
+LLM_API_KEY=your_key_here
+```
 
-- **STT failure (AssemblyAI unreachable):** [FILL IN — e.g. falls back to text input, shows error message]
-- **LLM/backend unreachable:** Frontend shows a fallback message: *"Sorry, main abhi jawab nahi de pa raha. Dobara try karo."* instead of crashing.
-- **TTS failure (Rime unreachable):** [FILL IN — e.g. falls back to on-screen text response only]
-- **No matching content on screen:** LLM is instructed to say so directly rather than guessing or inventing elements.
-- **Network interruption mid-response:** [FILL IN — describe agent behavior]
-
----
-
-## Team & Module Ownership
-
-| Name | Role | Module |
-|---|---|---|
-| Prajjwal | Voice Pipeline / Backend Lead | `/voice-agent` |
-| Akshita | Rime Integration Lead | `/rime-integration` |
-| Abhayraj | Frontend + Screen-Understanding Lead | `/frontend` |
-| Nihal | Integration, Test-Automation & Evidence Lead | `/testing-evidence` |
+Do **not** commit API keys or other secrets to GitHub.
 
 ---
 
-## License
+## 🔌 Third-Party Services
+
+VoiceGuide combines multiple services, with each one handling a specific part of the voice interaction pipeline.
+
+| Service          | Used For                                                                         |
+| ---------------- | -------------------------------------------------------------------------------- |
+| **AssemblyAI**   | Speech-to-text — converts the user's spoken question into text                   |
+| **Rime**         | Text-to-speech — generates natural spoken responses                              |
+| **LiveKit**      | Real-time audio transport, streaming and interruption/VAD handling               |
+| **LLM Provider** | Understands the user's query and visible page content and generates the response |
+
+---
+
+## 🔊 Rime Voice Integration
+
+Rime is used as the final speech layer of VoiceGuide.
+
+Instead of waiting for an entire response before generating audio, the integration is designed around **streaming speech**, helping reduce perceived response latency and making interruptions possible.
+
+### Current Rime configuration
+
+| Configuration       | Value                             |
+| ------------------- | --------------------------------- |
+| **Model ID**        | `[FILL IN]`                       |
+| **Speaker / Voice** | `[FILL IN]`                       |
+| **Language**        | `[FILL IN]`                       |
+| **Endpoint**        | `[FILL IN]`                       |
+| **Audio Format**    | `[FILL IN]`                       |
+| **Transport**       | `[FILL IN — WebSocket streaming]` |
+
+> Rime-specific configuration will be finalized by the **Rime Integration Lead**.
+
+---
+
+## ♿ Accessibility Focus
+
+VoiceGuide is built around a simple idea:
+
+**Users should be able to interact with web content without depending entirely on visual navigation.**
+
+The project focuses on:
+
+* 🎤 **Voice-first interaction**
+* 📖 **Understanding visible webpage content**
+* 🔊 **Natural spoken responses**
+* ⚡ **Low-latency interaction**
+* 🛑 **Interruptible speech**
+* 🧭 **Context-aware answers**
+* 🚫 **Avoiding fabricated information when content is unavailable**
+
+The assistant is instructed to answer based on the content available on the page rather than guessing about elements it cannot identify.
+
+---
+
+## ⚡ Interruptible Voice Interaction
+
+One of the key parts of VoiceGuide is that the assistant does **not** require the user to wait until the response finishes.
+
+For example:
+
+```text
+Assistant: "There are three options available on this page..."
+User:      "Stop. What is the second one?"
+Assistant: "The second option is..."
+```
+
+LiveKit's real-time audio pipeline and VAD help detect the user's interruption and allow the current response to be stopped.
+
+This makes the interaction closer to a normal voice conversation.
+
+---
+
+## 🛡️ Failure Behavior
+
+VoiceGuide is designed to fail gracefully when one of the external services becomes unavailable.
+
+| Situation                    | Expected behavior                                                          |
+| ---------------------------- | -------------------------------------------------------------------------- |
+| **STT unavailable**          | `[FILL IN — fallback behavior]`                                            |
+| **LLM/backend unavailable**  | Display/speak a fallback response instead of crashing                      |
+| **Rime unavailable**         | `[FILL IN — fallback behavior]`                                            |
+| **No relevant page content** | Assistant explicitly says that it could not find the requested information |
+| **Network interruption**     | `[FILL IN — agent behavior]`                                               |
+
+Example fallback response:
+
+> *"Sorry, main abhi jawab nahi de pa raha. Dobara try karo."*
+
+The system should prefer being transparent about missing information rather than inventing an answer.
+
+---
+
+## ⚠️ Known Limitations
+
+The current implementation has a few known limitations:
+
+* `readCurrentPage()` primarily captures content that is currently visible in the viewport. Content requiring scrolling may not be available until the process is triggered again.
+* There is currently **no persistent conversation memory**; questions are treated independently.
+* Pronunciation and number normalization — for example, naturally speaking values such as `₹500` or `10:30 AM` — may require further refinement.
+* Testing has primarily focused on **Chrome** rather than all major browsers.
+* LLM response generation can introduce additional latency into the voice pipeline.
+* Final Rime configuration and some failure fallbacks are still subject to integration testing.
+
+---
+
+## 🧪 Testing & Evidence
+
+The project includes testing around the complete interaction pipeline:
+
+```text
+User Input
+    ↓
+Speech Recognition
+    ↓
+Page Understanding
+    ↓
+LLM Response
+    ↓
+Rime TTS
+    ↓
+Audio Streaming
+    ↓
+User Interruption
+```
+
+Important areas to validate include:
+
+* End-to-end response latency
+* Speech recognition accuracy
+* Page-content extraction
+* Response relevance
+* Rime audio generation
+* Audio streaming reliability
+* Interruption detection
+* Recovery from service/network failures
+
+---
+
+## 👥 Team & Module Ownership
+
+| Team Member  | Role                                         | Primary Module      |
+| ------------ | -------------------------------------------- | ------------------- |
+| **Prajjwal** | Voice Pipeline / Backend Lead                | `/voice-agent`      |
+| **Akshita**  | Rime Integration Lead                        | `/rime-integration` |
+| **Abhayraj** | Frontend + Screen Understanding Lead         | `/frontend`         |
+| **Nihal**    | Integration, Test Automation & Evidence Lead | `/testing-evidence` |
+
+Each module is developed independently and integrated through the shared voice interaction pipeline.
+
+---
+
+## 📁 Project Structure
+
+```text
+VoiceGuide/
+│
+├── frontend/
+│   ├── src/
+│   │   ├── screenReader.js
+│   │   ├── promptBuilder.js
+│   │   └── ...
+│   └── ...
+│
+├── voice-agent/
+│   └── ...
+│
+├── rime-integration/
+│   └── ...
+│
+├── testing-evidence/
+│   └── ...
+│
+├── .env.example
+└── README.md
+```
+
+> The structure may evolve as the different modules are integrated.
+
+---
+
+## 🎯 Project Goal
+
+VoiceGuide aims to demonstrate how **real-time voice AI can make everyday web interaction more accessible**.
+
+The goal isn't simply to read a webpage aloud. It is to let users **ask questions about what they are currently viewing and interact with the answer conversationally**.
+
+---
+
+## 📜 License
+
+This project was developed as part of the **DataForge Rime Hackathon Challenge 2026**.
