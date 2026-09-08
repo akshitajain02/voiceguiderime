@@ -168,25 +168,6 @@ cd voice-agent
 
 ---
 
-## 🔐 Environment Variables
-
-Create a `.env` file in the appropriate module directory.
-
-Example:
-
-```env
-ASSEMBLYAI_API_KEY=your_key_here
-RIME_API_KEY=your_key_here
-LIVEKIT_API_KEY=your_key_here
-LIVEKIT_API_SECRET=your_secret_here
-LIVEKIT_URL=your_livekit_url
-LLM_API_KEY=your_key_here
-```
-
-Do **not** commit API keys or other secrets to GitHub.
-
----
-
 ## 🔌 Third-Party Services
 
 VoiceGuide combines multiple services, with each one handling a specific part of the voice interaction pipeline.
@@ -210,7 +191,7 @@ Instead of waiting for an entire response before generating audio, the integrati
 
 | Configuration       | Value                             |
 | ------------------- | --------------------------------- |
-| **Model ID**        | `[FILL IN]`                       |
+| **Model ID**        | `mistv3`                       |
 | **Speaker / Voice** | `[FILL IN]`                       |
 | **Language**        | `[FILL IN]`                       |
 | **Endpoint**        | `[FILL IN]`                       |
