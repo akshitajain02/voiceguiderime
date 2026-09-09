@@ -1,4 +1,4 @@
-# 🎙️ VoiceGuide
+#  VoiceGuide
 
 ### Rime-Integrated Voice Assistant for Visually Impaired Users
 
@@ -15,7 +15,7 @@ Built for the **DataForge Rime Hackathon Challenge**.
 
 ---
 
-## ✨ What is VoiceGuide?
+##  What is VoiceGuide?
 
 Navigating a modern webpage can be difficult without visual feedback. VoiceGuide addresses this by connecting **screen understanding, speech recognition, an LLM, and real-time voice synthesis** into a single interaction loop.
 
@@ -33,7 +33,7 @@ The interaction is designed to feel conversational rather than like a traditiona
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```text
 ┌──────────────────────┐
@@ -106,7 +106,7 @@ The interaction is designed to feel conversational rather than like a traditiona
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
