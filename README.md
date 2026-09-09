@@ -168,7 +168,7 @@ cd voice-agent
 
 ---
 
-## 🔌 Third-Party Services
+## Third-Party Services
 
 VoiceGuide combines multiple services, with each one handling a specific part of the voice interaction pipeline.
 
@@ -181,7 +181,7 @@ VoiceGuide combines multiple services, with each one handling a specific part of
 
 ---
 
-## 🔊 Rime Voice Integration
+##  Rime Voice Integration
 
 Rime is used as the final speech layer of VoiceGuide.
 
@@ -202,7 +202,7 @@ Instead of waiting for an entire response before generating audio, the integrati
 
 ---
 
-## ♿ Accessibility Focus
+##  Accessibility Focus
 
 VoiceGuide is built around a simple idea:
 
@@ -210,19 +210,19 @@ VoiceGuide is built around a simple idea:
 
 The project focuses on:
 
-* 🎤 **Voice-first interaction**
-* 📖 **Understanding visible webpage content**
-* 🔊 **Natural spoken responses**
-* ⚡ **Low-latency interaction**
-* 🛑 **Interruptible speech**
-* 🧭 **Context-aware answers**
-* 🚫 **Avoiding fabricated information when content is unavailable**
+*  **Voice-first interaction**
+*  **Understanding visible webpage content**
+*  **Natural spoken responses**
+*  **Low-latency interaction**
+*  **Interruptible speech**
+*  **Context-aware answers**
+*  **Avoiding fabricated information when content is unavailable**
 
 The assistant is instructed to answer based on the content available on the page rather than guessing about elements it cannot identify.
 
 ---
 
-## ⚡ Interruptible Voice Interaction
+##  Interruptible Voice Interaction
 
 One of the key parts of VoiceGuide is that the assistant does **not** require the user to wait until the response finishes.
 
@@ -240,7 +240,7 @@ This makes the interaction closer to a normal voice conversation.
 
 ---
 
-## 🛡️ Failure Behavior
+##  Failure Behavior
 
 VoiceGuide is designed to fail gracefully when one of the external services becomes unavailable.
 
@@ -260,7 +260,7 @@ The system should prefer being transparent about missing information rather than
 
 ---
 
-## ⚠️ Known Limitations
+##  Known Limitations
 
 The current implementation has a few known limitations:
 
@@ -273,7 +273,7 @@ The current implementation has a few known limitations:
 
 ---
 
-## 🧪 Testing & Evidence
+##  Testing & Evidence
 
 The project includes testing around the complete interaction pipeline:
 
@@ -306,7 +306,7 @@ Important areas to validate include:
 
 ---
 
-## 👥 Team & Module Ownership
+##  Team & Module Ownership
 
 | Team Member  | Role                                         | Primary Module      |
 | ------------ | -------------------------------------------- | ------------------- |
@@ -319,7 +319,7 @@ Each module is developed independently and integrated through the shared voice i
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```text
 VoiceGuide/
@@ -348,7 +348,7 @@ VoiceGuide/
 
 ---
 
-## 🎯 Project Goal
+##  Project Goal
 
 VoiceGuide aims to demonstrate how **real-time voice AI can make everyday web interaction more accessible**.
 
