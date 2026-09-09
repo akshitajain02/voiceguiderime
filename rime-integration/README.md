@@ -1,3 +1,4 @@
+ backend-prajjwal_baweja
 # Rime Integration — Akshita's Module
 
 This folder is owned by **Akshita**.
@@ -21,3 +22,6 @@ tts = RimeTTS(model="mist", speed=1.05)
 - `voice_config.py` — Voice/model selection
 - `prompt_tuning.py` — "Writing for the ear" utilities
 - `fallback.py` — Fallback TTS logic
+
+# Rime Integration
+main
