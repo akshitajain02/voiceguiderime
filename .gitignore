@@ -1,0 +1,32 @@
+# ── Environment / Secrets ───────────────────────────
+.env
+.env.*
+
+# ── Python ──────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ── Virtual environments ────────────────────────────
+.venv/
+.venv2/
+venv/
+env/
+
+# ── IDE / Editor ────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── OS files ────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Agents / AI ─────────────────────────────────────
+.agents/

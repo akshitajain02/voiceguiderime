@@ -1,0 +1,17 @@
+{
+    "pythonVersion": "3.11",
+    "pythonPlatform": "Windows",
+    "venvPath": ".",
+    "venv": ".venv2",
+    "extraPaths": [
+        "./voice-agent",
+        "./rime-integration"
+    ],
+    "reportMissingImports": "warning",
+    "reportMissingTypeStubs": "none",
+    "reportUnknownMemberType": "none",
+    "reportUnknownParameterType": "none",
+    "reportUnknownVariableType": "none",
+    "reportUnknownArgumentType": "none",
+    "typeCheckingMode": "basic"
+}
