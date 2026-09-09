@@ -327,3 +327,52 @@
     opacity: 0;
   }
 }
+.chasma-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  height: 250px;
+  transform: translate(-50%, -50%) scale(calc(1 + var(--scroll-progress, 0) * 14));
+  transform-origin: center;
+  opacity: calc(1 - var(--scroll-progress, 0) * 0.15);
+  transition: transform 0.05s linear;
+}
+
+.lens {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 4;
+  opacity: 0.5;
+}
+
+.lens-right {
+  fill: var(--surface);
+  fill-opacity: var(--scroll-progress, 0);
+  transition: fill-opacity 0.1s linear;
+}
+
+.chasma-bridge {
+  stroke: var(--accent);
+  stroke-width: 4;
+  opacity: 0.5;
+}
+
+.header-nav button.nav-link {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-family: inherit;
+  padding: 0;
+}
+
+.header-nav button.nav-link:hover {
+  color: var(--text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chasma-bg {
+    transform: translate(-50%, -50%) scale(1) !important;
+  }
+}
