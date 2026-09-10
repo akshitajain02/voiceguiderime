@@ -222,11 +222,10 @@ The companion app sends screen accessibility data via LiveKit data-channel as JS
 | **Prajjwal** | Voice Pipeline / Backend Lead — LiveKit Agent, STT, VAD + interrupt logic, state tracking |
 
 # Install dependencies
-[FILL IN — e.g. pip install -r requirements.txt]
+
 
 # Start the agent
-[FILL IN — e.g. python agent.py]
-```
+
  **Note:** The exact backend commands depend on the final voice-agent implementation.
 
 ---
