@@ -220,8 +220,10 @@ The companion app sends screen accessibility data via LiveKit data-channel as JS
 | Member | Role |
 |--------|------|
 | **Prajjwal** | Voice Pipeline / Backend Lead — LiveKit Agent, STT, VAD + interrupt logic, state tracking |
+| **Akshita** | Rime Integration Lead / rime-integration |
+| **Abhayraj** | Frontend + Screen Understanding Lead / frontend |
+| **Nihal** | Integration / Test Automation & Evidence Lead |
 
-# Install dependencies
 
 
 # Start the agent
@@ -307,11 +309,11 @@ VoiceGuide is designed to fail gracefully when one of the external services beco
 
 | Situation                    | Expected behavior                                                          |
 | ---------------------------- | -------------------------------------------------------------------------- |
-| **STT unavailable**          | `[FILL IN — fallback behavior]`                                            |
-| **LLM/backend unavailable**  | Display/speak a fallback response instead of crashing                      |
-| **Rime unavailable**         | `[FILL IN — fallback behavior]`                                            |
+| **STT unavailable**          | Not handled in code yet — needs a fallback added                                            |
+| **LLM/backend unavailable**  | Frontend shows a fallback message: "Sorry, main abhi jawab nahi de pa raha. Dobara try karo." instead of crashing.                      |
+| **Rime unavailable**         | not handled in code yet — needs a fallback added                                            |
 | **No relevant page content** | Assistant explicitly says that it could not find the requested information |
-| **Network interruption**     | `[FILL IN — agent behavior]`                                               |
+| **Network interruption**     | Interrupt logic exists but set_pending_speech() is never called, so unheard-text recovery is currently dead — needs fixing before this can be documented as working                                             |
 
 Example fallback response:
 
