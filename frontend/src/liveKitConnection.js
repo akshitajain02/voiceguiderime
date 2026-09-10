@@ -19,7 +19,9 @@ export class VoiceGuideConnection {
    * @param {(error: Error) => void} [options.onError] - Error callback
    */
   constructor({
-    tokenServerUrl = "http://localhost:8000/token",
+    tokenServerUrl = (typeof window !== "undefined" && window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1")
+      ? "/api/token"
+      : "http://localhost:8000/token",
     onStateChange,
     onSpeakingChange,
     onError,

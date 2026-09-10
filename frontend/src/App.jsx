@@ -54,7 +54,6 @@ function App() {
 
   useEffect(() => {
     const connection = new VoiceGuideConnection({
-      tokenServerUrl: "http://localhost:8000/token",
       onStateChange: (state) => {
         setConnectionState(state);
         if (state === "connected") {
