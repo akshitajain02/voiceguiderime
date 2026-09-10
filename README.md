@@ -252,13 +252,13 @@ Instead of waiting for an entire response before generating audio, the integrati
 
 ### Current Rime configuration
 
-| Configuration       | Value                             |
-| ------------------- | --------------------------------- |
-| **RIME Model ID**        | `mistv3`                       |
-| **RIME Speaker / Voice** | `cedar`                       |
-| **RIME Language**        | `English`                       |
-| **RIME Audio Format**    | `mp3`                       |
-| **RIME TIME SCALE Factor**       | `1.0`     |
+| Configuration            | Value                        |
+| -------------------      | ---------------------------- |
+| **RIME Model ID**        | `mistv3`                     |
+| **RIME Speaker / Voice** | `cedar`                      |
+| **RIME Language**        | `English`                    |
+| **RIME Audio Format**    | `mp3`                        |
+| **RIME TIME SCALE Factor**| `1.0`                       |
 
 Rime-specific configuration will be finalized by the **Rime Integration Lead**.
 
