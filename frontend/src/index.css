@@ -1,0 +1,53 @@
+/* src/index.css */
+:root {
+  --bg: #0f1420;
+  --surface: #171f30;
+  --surface-elevated: #1f2a40;
+  --accent: #ffb255;
+  --accent-soft: rgba(255, 178, 85, 0.14);
+  --teal: #5ee6c5;
+  --text: #f5f3ee;
+  --text-muted: #9aa3b5;
+  --border: rgba(245, 243, 238, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Accessibility: visible focus ring everywhere */
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

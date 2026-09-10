@@ -1,0 +1,7 @@
+livekit>=0.18.0
+livekit-agents>=1.0.0
+livekit-plugins-assemblyai>=0.4.0
+livekit-plugins-silero>=1.0.0
+livekit-plugins-rime>=0.4.0
+livekit-plugins-groq>=1.0.0
+python-dotenv>=1.0.0
