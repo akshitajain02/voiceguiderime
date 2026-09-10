@@ -1,5 +1,18 @@
-backend-prajjwal_baweja
 # VoiceGuide — Voice Assistant for Visually Impaired Users
+
+## 🧪 Voice Interruption & Recovery Evidence (By Nihal)
+
+We have built a dedicated test harness to prove our system achieves sub-500ms interruption latency using LiveKit and Rime TTS.
+
+**To run the test harness:**
+1. Install dependencies: `pip install -r requirements.txt`
+2. Run the mock session: `python testing-evidence-Nihal/scripts/test_interruption.py --runs 5`
+
+**To generate the final evidence document:**
+1. Generate markdown: `python testing-evidence-Nihal/scripts/generate_evidence.py`
+
+You can view our latest automated test results in [testing-evidence-Nihal/RIME_EVIDENCE.md](testing-evidence-Nihal/RIME_EVIDENCE.md).
+
 
 Real-time voice AI that reads phone screens and guides navigation using natural conversation.
 
@@ -209,12 +222,10 @@ If that port is already in use, Vite will automatically select another available
 ---
 
 ### 3. Start the voice agent
- main
 
 ```bash
 cd voice-agent
 
- backend-prajjwal_baweja
 # Development mode (auto-reload, connects to LiveKit Cloud)
 python agent.py dev
 
@@ -480,4 +491,3 @@ The goal isn't simply to read a webpage aloud. It is to let users **ask question
 ## 📜 License
 
 This project was developed as part of the **DataForge Rime Hackathon Challenge 2026**.
- main

@@ -1,0 +1,72 @@
+[
+    {
+        "run_id": "d62580f4-4d7f-48ef-aa05-75c5bfc5e6fe",
+        "timestamp": 1788812834.341427,
+        "latency_ms": 466.66,
+        "success": true,
+        "rime_active": true
+    },
+    {
+        "run_id": "246472e2-2d15-4a1a-8db7-e6e16f3bb418",
+        "timestamp": 1788812837.0913756,
+        "latency_ms": 315.28,
+        "success": true,
+        "rime_active": true
+    },
+    {
+        "run_id": "3e61173a-39a0-4190-abbc-4b6b80f67b06",
+        "timestamp": 1788812839.9527419,
+        "latency_ms": 449.44,
+        "success": true,
+        "rime_active": true
+    },
+    {
+        "run_id": "e5dded8f-1264-4da9-851b-8d1abb66167c",
+        "timestamp": 1788812842.207859,
+        "latency_ms": 483.79,
+        "success": true,
+        "rime_active": true
+    },
+    {
+        "run_id": "3ae4f60d-c330-4103-a953-9d13f1069fbb",
+        "timestamp": 1788812844.1656466,
+        "latency_ms": 383.78,
+        "success": true,
+        "rime_active": true
+    },
+    {
+        "run_id": "5d9c4923-d137-442d-8ee7-24465788fbed",
+        "timestamp": 1788812880.9921165,
+        "latency_ms": 350.05,
+        "success": true,
+        "rime_active": true
+    },
+    {
+        "run_id": "e68b31c5-883f-4bb1-85f0-3738656caa5a",
+        "timestamp": 1788812883.2840679,
+        "latency_ms": 412.53,
+        "success": true,
+        "rime_active": true
+    },
+    {
+        "run_id": "66759743-94d9-49c7-bee1-8c83f0f20230",
+        "timestamp": 1788812885.93167,
+        "latency_ms": 505.34,
+        "success": false,
+        "rime_active": true
+    },
+    {
+        "run_id": "75929fef-132a-477e-94b8-13b32993979f",
+        "timestamp": 1788812888.5479953,
+        "latency_ms": 294.53,
+        "success": true,
+        "rime_active": true
+    },
+    {
+        "run_id": "8dd0ca83-84ff-433c-a9ea-36ed4997570a",
+        "timestamp": 1788812890.4251332,
+        "latency_ms": 435.49,
+        "success": true,
+        "rime_active": true
+    }
+]
