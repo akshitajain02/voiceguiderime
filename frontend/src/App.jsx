@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { readCurrentPage } from "./screenReader";
-import { askAssistant } from "./api";
+import { readCurrentPage as extractScreenContent } from "./screenReader";
+import { VoiceGuideConnection } from "./liveKitConnection";
 import logo from "./assets/logo.png.png";
 import "./App.css";
 
@@ -29,10 +29,14 @@ function MicIcon() {
 }
 
 function App() {
+  const [connectionState, setConnectionState] = useState("disconnected");
+  const [speakingStatus, setSpeakingStatus] = useState({
+    isLocalSpeaking: false,
+    isAgentSpeaking: false,
+  });
   const [query, setQuery] = useState("");
   const [reply, setReply] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isListening, setIsListening] = useState(false);
   const [typedText, setTypedText] = useState("");
 
   const fullHeadline = "Hear your screen, not just see it";
@@ -42,6 +46,43 @@ function App() {
   const howItWorksRef = useRef(null);
   const assistantRef = useRef(null);
   const glassesRef = useRef(null);
+  const connectionRef = useRef(null);
+
+  // --------------------------------------------------
+  // LIVEKIT CONNECTION INITIALIZATION
+  // --------------------------------------------------
+
+  useEffect(() => {
+    const connection = new VoiceGuideConnection({
+      tokenServerUrl: "http://localhost:8000/token",
+      onStateChange: (state) => {
+        setConnectionState(state);
+        if (state === "connected") {
+          setReply("Connected to VoiceGuide! Listening for your voice...");
+        } else if (state === "disconnected") {
+          setReply("");
+        }
+      },
+      onSpeakingChange: (status) => {
+        setSpeakingStatus(status);
+        if (status.isAgentSpeaking) {
+          setReply("VoiceGuide is speaking (Rime TTS)... Interrupt anytime by speaking!");
+        } else if (status.isLocalSpeaking) {
+          setReply("Listening to you...");
+        }
+      },
+      onError: (err) => {
+        console.error("VoiceGuide connection error:", err);
+        setReply(`Connection error: ${err.message || "Failed to connect"}`);
+      },
+    });
+
+    connectionRef.current = connection;
+
+    return () => {
+      connection.disconnect();
+    };
+  }, []);
 
   // --------------------------------------------------
   // HERO TYPING ANIMATION
@@ -79,7 +120,6 @@ function App() {
 
     document.addEventListener("touchend", handleTouchEnd);
 
-    
     return () => {
       document.removeEventListener("touchend", handleTouchEnd);
     };
@@ -130,43 +170,54 @@ function App() {
   }, []);
 
   // --------------------------------------------------
-  // ASK ASSISTANT
+  // LIVEKIT START / STOP / MICROPHONE
   // --------------------------------------------------
 
-  const handleAsk = async () => {
-    if (!query.trim() || loading) {
-      return;
-    }
+  const handleMicClick = async () => {
+    if (!connectionRef.current) return;
 
-    try {
-      setLoading(true);
-      setReply("");
+    if (connectionState === "connected") {
+      await connectionRef.current.disconnect();
+    } else if (connectionState !== "connecting") {
+      try {
+        setLoading(true);
+        setReply("Connecting to VoiceGuide...");
 
-      const screenData = readCurrentPage();
+        // 1. Connect to LiveKit room & publish microphone
+        await connectionRef.current.connect({
+          room: "voiceguide-room",
+        });
 
-      const answer = await askAssistant(
-        screenData,
-        query
-      );
+        // 2. Extract screen content using existing screenReader
+        const screenData = extractScreenContent();
 
-      setReply(answer);
-    } catch (error) {
-      console.error("VoiceGuide error:", error);
-
-      setReply(
-        "Sorry, main abhi jawab nahi de pa raha. Please try again."
-      );
-    } finally {
-      setLoading(false);
+        // 3. Send screen context to backend agent via data channel
+        await connectionRef.current.sendScreenContent(screenData);
+      } catch (err) {
+        console.error("VoiceGuide start error:", err);
+        setReply(
+          "Could not connect to VoiceGuide. Please ensure token_server (port 8000) is running."
+        );
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   // --------------------------------------------------
-  // MICROPHONE
+  // ASK ASSISTANT / REFRESH SCREEN
   // --------------------------------------------------
 
-  const handleMicClick = () => {
-    setIsListening((prev) => !prev);
+  const handleAsk = async () => {
+    if (loading) return;
+
+    if (connectionState !== "connected") {
+      await handleMicClick();
+    } else if (connectionRef.current) {
+      const screenData = extractScreenContent();
+      await connectionRef.current.sendScreenContent(screenData);
+      setReply(`Screen content updated and sent to VoiceGuide.`);
+    }
   };
 
   // --------------------------------------------------
@@ -179,6 +230,9 @@ function App() {
       block: "start",
     });
   };
+
+  const isListening = connectionState === "connected";
+
 
   return (
     <div className="page">
@@ -405,9 +459,11 @@ function App() {
             }`}
             onClick={handleMicClick}
             aria-label={
-              isListening
-                ? "Stop listening"
-                : "Start speaking"
+              connectionState === "connected"
+                ? "Stop VoiceGuide"
+                : connectionState === "connecting"
+                ? "Connecting..."
+                : "Start VoiceGuide"
             }
             aria-pressed={isListening}
           >
@@ -421,9 +477,15 @@ function App() {
             className="mic-status"
             aria-live="polite"
           >
-            {isListening
-              ? "Listening..."
-              : "Tap the mic to speak"}
+            {connectionState === "connecting"
+              ? "Connecting to VoiceGuide..."
+              : connectionState === "connected"
+              ? speakingStatus.isAgentSpeaking
+                ? "VoiceGuide is speaking (tap mic to stop)..."
+                : speakingStatus.isLocalSpeaking
+                ? "Listening to you..."
+                : "VoiceGuide is active — ask anything or interrupt anytime"
+              : "Tap the mic to start VoiceGuide"}
           </div>
 
 
@@ -449,11 +511,13 @@ function App() {
             <button
               className="ask-button"
               onClick={handleAsk}
-              disabled={loading || !query.trim()}
+              disabled={loading}
             >
               {loading
-                ? "Thinking..."
-                : "Ask"}
+                ? "Connecting..."
+                : connectionState === "connected"
+                ? "Sync Screen"
+                : "Start VoiceGuide"}
             </button>
 
           </div>

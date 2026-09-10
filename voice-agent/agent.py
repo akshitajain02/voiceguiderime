@@ -86,7 +86,7 @@ async def entrypoint(ctx: JobContext) -> None:
         ),
         tts=rime.TTS(
             model="mist",
-            speed=1.05,
+            speed_alpha=1.05,
         ),
         vad=ctx.proc.userdata["vad"],
         allow_interruptions=True,
