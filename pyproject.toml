@@ -1,2 +1,2 @@
 [tool.vercel]
-entrypoint="voice-agent/token_server.py
+entrypoint = "voice-agent.token_server:app"
